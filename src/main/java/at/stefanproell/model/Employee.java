@@ -10,18 +10,31 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+
 @Entity(name="employees")
+@Indexed
 public class Employee {
 	@Id
 	@Column(name="emp_no")
 	private int employee_id;
 	
+	@Field(index = Index.YES, analyze=Analyze.NO, store = Store.YES)
+	@DateBridge(resolution = Resolution.DAY)
 	@Column(name="birth_date")
 	private Date birthdate;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="first_name")
 	private String firstname;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name="last_name")
 	private String lastname;
 	
@@ -29,6 +42,8 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
+	@Field(index = Index.YES, analyze=Analyze.NO, store = Store.YES)
+	@DateBridge(resolution = Resolution.DAY)
 	@Column(name="hire_date")
 	private Date hireDate;
 
